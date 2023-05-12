@@ -1,0 +1,69 @@
+<nav class="navbar fixed-top" style="background-color: #212529;">
+  <div class="container-fluid">
+    <form class="d-flex col-11 col-md-3 loginForm" role="search" method="post" action="/admin/search-user/">
+      <input class="form-control me-2 search" type="search" placeholder="Search" name="key" aria-label="Search"
+        style="font-size: .8rem; border-color:grey; color:white; background-color:rgba(0, 0, 0, 0.404);">
+      <button class="btn btn-outline-success" type="submit" style="font-size: .8rem;">Search</button>
+    </form>
+    <div class="col-md-7"></div>
+    <div class="col-1 col-md-2 d-flex">
+
+      <a href="/admin/create-user" class="btn btn-outline-info d-none d-md-flex me-3" style="font-size: .8rem;">create
+        User</a>
+      <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+          style="font-size: .8rem; max-width:70px; overflow:hidden" aria-expanded="false">
+          {{adminName}}
+        </a>
+
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/admin/logout">Logout</a></li>
+          <li><a class="dropdown-item  d-block d-md-none" href="/admin/create-user">create User</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="table-main">
+
+  <div class="table-container">
+    <div class="container">
+      {{#if userDeleted}}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>User Deleted successfully</strong>
+        <a href="/admin/remove-alert" class="btn-close"></a>
+      </div>
+      {{/if}}
+      {{#if userUpdated}}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>User Updated Successfully</strong>
+        <a href="/admin/remove-alert" class="btn-close"></a>
+      </div>
+      {{/if}}
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col" class="d-none d-md-block">Phone</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each users}}
+          <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <th class="d-none d-md-flex" style="height:65px;">{{this.mobile}}</th>
+            <td>
+              <a href="/admin/update-user/{{this._id}}" class="btn btn-outline-primary">Edit</a>
+              <button class="btn btn-outline-danger"
+                onclick="if(confirm('Are You Sure delete user ? ')){window.location.href='/admin/delete-user/{{this._id}}'}">Delete</button>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
